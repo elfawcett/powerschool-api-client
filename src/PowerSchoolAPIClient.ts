@@ -45,7 +45,7 @@ class PowerSchoolAPIClient {
    * @param apiBaseURL Base URL to use in Axios instance
    * @param responseTransformers Array of response transforming functions to pass to Axios instance
    */
-  constructor(options: { clientID: string; accessTokenURL: string; apiBaseURL: string; responseTransformers: [any] }) {
+  constructor(options: { clientID: string; accessTokenURL: string; apiBaseURL: string; responseTransformers?: [any?] }) {
     const { clientID, accessTokenURL, apiBaseURL, responseTransformers } = options;
 
     this._secret = clientID;
@@ -71,7 +71,7 @@ class PowerSchoolAPIClient {
     };
 
     /* Define our Axios response transformers */
-    const transformers = [this._transformJSON].concat(responseTransformers);
+    const transformers = responseTransformers ? [this._transformJSON].concat(responseTransformers) : [this._transformJSON];
 
     /* Get our access token, then set Axios instance */
     axios
